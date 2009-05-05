@@ -4,8 +4,9 @@
  */
 package net.anzix.callcost.tmobile;
 
+import net.anzix.callcost.hu.MediaMania;
 import java.util.Calendar;
-import net.anzix.callcost.DestinationType;
+import net.anzix.callcost.hu.DestinationType;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

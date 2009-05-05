@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.anzix.callcost.pannon;
+package net.anzix.callcost.hu;
 
 import java.util.Calendar;
 import net.anzix.callcost.AbstractPlan;

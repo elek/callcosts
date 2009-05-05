@@ -1,7 +1,7 @@
-package net.anzix.callcost.tmobile;
+package net.anzix.callcost.hu;
 
 import java.util.Calendar;
-import net.anzix.callcost.DestinationType;
+import net.anzix.callcost.hu.DestinationType;
 import net.anzix.callcost.def.CostCondition;
 import net.anzix.callcost.def.SimplePlan;
 

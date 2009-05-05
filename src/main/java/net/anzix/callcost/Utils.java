@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.anzix.callcost;
 
 import android.app.Activity;
@@ -50,16 +46,16 @@ public class Utils {
             } while (c.moveToNext());
 
         }
-
+        String currency = World.instance().getCurrentCountry().getCurrency();
         for (Plan p : plans) {
             Map<String, Object> item = new HashMap();
             item.put("planid", p.getId());
             item.put("provider", p.getProvider().getName());
             item.put("callplan", p.getName());
-            item.put("callcost", p.getCosts() + "Ft");
+            item.put("callcost", p.getCosts() + " " + currency);
 
             item.put("costint", p.getCosts());
-            item.put("cost", p.getCosts() + " Ft");
+            item.put("cost", p.getCosts() + " " + currency);
 
             int net = requiredNet - p.getIncludedNet();
             if (net > 0) {
@@ -67,10 +63,10 @@ public class Utils {
                 if (np != null) {
                     item.put("netplan", np.getName());
                     int npcost = np.getCosts(net);
-                    item.put("netcost", npcost + " Ft");
+                    item.put("netcost", npcost + " " + currency);
 
                     item.put("costint", p.getCosts() + npcost);
-                    item.put("cost", (p.getCosts() + npcost) + " Ft");
+                    item.put("cost", (p.getCosts() + npcost) + " " + currency);
 
                 }
             }

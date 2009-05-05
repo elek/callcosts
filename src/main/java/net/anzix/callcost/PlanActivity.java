@@ -52,14 +52,15 @@ public class PlanActivity extends ListActivity {
     }
 
     private void refresh() {
-        p = World.getDefaultCountry().getPlan(getIntent().getExtras().getString("planid"));
+        Country country = World.instance().getCurrentCountry();
+        p = country.getPlan(getIntent().getExtras().getString("planid"));
 
         p.reset();
 
         Cursor c = Utils.getCursor(this);
 
         startManagingCursor(c);
-        DestinationTypeDetector detect = new DestinationTypeDetector();
+        DestinationTypeDetector detect = country.getNumberParser();
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));

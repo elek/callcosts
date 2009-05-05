@@ -1,5 +1,6 @@
 package net.anzix.callcost;
 
+import net.anzix.callcost.hu.Hungary;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -19,8 +20,6 @@ import java.util.Map;
  */
 public class CallLogActivity extends ListActivity {
 
-    private Hungary hungary = new Hungary();
-
     List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 
     @Override
@@ -28,14 +27,16 @@ public class CallLogActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log);
 
-        Plan p = hungary.getPlan(getIntent().getExtras().getString("planid"));
+        Country country = World.instance().getCurrentCountry();
+
+        Plan p = country.getPlan(getIntent().getExtras().getString("planid"));
         p.reset();
 
-        
+
         Cursor c = Utils.getCursor(this);
 
         startManagingCursor(c);
-        DestinationTypeDetector detect = new DestinationTypeDetector();
+        DestinationTypeDetector detect = country.getNumberParser();
         if (c.moveToFirst()) {
             do {
                 Map<String, String> item = new HashMap<String, String>();

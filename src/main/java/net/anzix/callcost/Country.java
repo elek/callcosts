@@ -4,6 +4,7 @@
  */
 package net.anzix.callcost;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -15,4 +16,12 @@ public interface Country {
     public List<Provider> getProviders();
 
     public Plan getPlan(String id);
+
+    public String getName();
+
+    public String getCurrency();
+
+    public DestinationTypeDetector getNumberParser();
+
+    public Collection<Plan> getAllPlans();
 }

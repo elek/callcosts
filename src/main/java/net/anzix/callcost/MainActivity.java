@@ -1,5 +1,6 @@
 package net.anzix.callcost;
 
+import net.anzix.callcost.hu.Hungary;
 import android.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +35,6 @@ public class MainActivity extends ListActivity {
 
     private static final int MENU_REFRESH = 2;
 
-    private Hungary hungary = new Hungary();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -60,12 +60,13 @@ public class MainActivity extends ListActivity {
     }
 
     public void refresh() {
+        World.init(this);
         result.clear();
         Cursor c = Utils.getCursor(this);
         startManagingCursor(c);
-        DestinationTypeDetector detect = new DestinationTypeDetector();
+        DestinationTypeDetector detect = World.instance().getCurrentCountry().getNumberParser();
 
-        Collection<Plan> plans = hungary.getAllPlans();
+        Collection<Plan> plans = World.instance().getCurrentCountry().getAllPlans();
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));
@@ -89,6 +90,7 @@ public class MainActivity extends ListActivity {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        World.init(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.plans);
         refresh();

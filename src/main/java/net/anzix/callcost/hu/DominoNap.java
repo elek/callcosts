@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.anzix.callcost.tmobile;
+package net.anzix.callcost.hu;
 
-import net.anzix.callcost.DestinationType;
+import net.anzix.callcost.hu.DestinationType;
 import net.anzix.callcost.def.CostCondition;
 import net.anzix.callcost.def.SimplePlan;
 
