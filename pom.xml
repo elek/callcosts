@@ -3,7 +3,7 @@
     <groupId>net.anzix.android</groupId>
     <artifactId>callcosts</artifactId>
     <packaging>apk</packaging>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
     <name>Call costs</name>
     <scm>
         <connection>scm:git:git@github.com:elek/callcosts.git</connection>
@@ -31,13 +31,13 @@
         <repository>
             <id>anzix</id>
             <name>Anzix</name>
-            <url>scp://anzix.net/home/elek/wwwroot/anzix.net/maven</url>
+            <url>http://anzix.net/nexus/content/repositories/releases</url>
         </repository>
         <!-- use the following if you ARE using a snapshot version. -->
         <snapshotRepository>
             <id>anzix-snapshot</id>
             <name>Anzix snapshot</name>
-            <url>scp://anzix.net/home/elek/wwwroot/anzix.net/maven</url>
+            <url>http://anzix.net/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
