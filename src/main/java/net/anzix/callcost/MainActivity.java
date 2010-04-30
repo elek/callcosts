@@ -61,17 +61,13 @@ public class MainActivity extends ListActivity {
 
     public void refresh() {
         result.clear();
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        int dayWindow = Integer.parseInt(sp.getString("daywindow", "30"));
-        long epoch = Calendar.getInstance().getTimeInMillis();
-        epoch -= (dayWindow * 24 * 60 * 60 * 1000);
-        Cursor c = getContentResolver().query(CallLog.Calls.CONTENT_URI, null, CallLog.Calls.TYPE + "='" + CallLog.Calls.OUTGOING_TYPE + "' AND " + CallLog.Calls.DATE + ">" + epoch, null, CallLog.Calls.DATE);
+        Cursor c = Utils.getCursor(this);
         startManagingCursor(c);
         DestinationTypeDetector detect = new DestinationTypeDetector();
 
         Collection<Plan> plans = hungary.getAllPlans();
 
-
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));
 
         result = Utils.calculateplans(plans, c, detect, requiredNet);

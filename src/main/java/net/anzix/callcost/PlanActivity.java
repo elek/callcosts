@@ -6,12 +6,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.CallLog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SimpleAdapter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,14 +56,12 @@ public class PlanActivity extends ListActivity {
 
         p.reset();
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        int dayWindow = Integer.parseInt(sp.getString("daywindow", "30"));
-        long epoch = Calendar.getInstance().getTimeInMillis();
-        epoch -= (dayWindow * 24 * 60 * 60 * 1000);
-        Cursor c = getContentResolver().query(CallLog.Calls.CONTENT_URI, null, CallLog.Calls.TYPE + "='" + CallLog.Calls.OUTGOING_TYPE + "' AND " + CallLog.Calls.DATE + ">" + epoch, null, CallLog.Calls.DATE);
+        Cursor c = Utils.getCursor(this);
 
         startManagingCursor(c);
         DestinationTypeDetector detect = new DestinationTypeDetector();
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));
 
         Map<String, Object> result = Utils.calculateplans(p, c, detect, requiredNet);

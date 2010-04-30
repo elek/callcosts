@@ -1,10 +1,8 @@
 package net.anzix.callcost;
 
 import android.app.ListActivity;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.CallLog;
 import android.util.Log;
 import android.widget.SimpleAdapter;
@@ -33,11 +31,8 @@ public class CallLogActivity extends ListActivity {
         Plan p = hungary.getPlan(getIntent().getExtras().getString("planid"));
         p.reset();
 
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        int dayWindow = Integer.parseInt(sp.getString("daywindow", "30"));
-        long epoch = Calendar.getInstance().getTimeInMillis();
-        epoch -= (dayWindow * 24 * 60 * 60 * 1000);
-        Cursor c = getContentResolver().query(CallLog.Calls.CONTENT_URI, null, CallLog.Calls.TYPE + "='" + CallLog.Calls.OUTGOING_TYPE + "' AND " + CallLog.Calls.DATE + ">" + epoch, null, CallLog.Calls.DATE);
+        
+        Cursor c = Utils.getCursor(this);
 
         startManagingCursor(c);
         DestinationTypeDetector detect = new DestinationTypeDetector();

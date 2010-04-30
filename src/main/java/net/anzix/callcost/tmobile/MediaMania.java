@@ -26,7 +26,6 @@ public class MediaMania extends SimplePlan {
     @Override
     public int call(Calendar time, String to, int durationSec) {
         int cost = super.call(time, to, durationSec);
-        System.out.println("cist cost");
         if (!to.equals(DestinationType.KEK)) {
             if (lebeszelheto > 0) {
                 lebeszelheto -= cost;

@@ -4,7 +4,10 @@
  */
 package net.anzix.callcost;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.preference.PreferenceManager;
 import android.provider.CallLog;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,5 +96,14 @@ public class Utils {
             }
         }
         return cheap;
+    }
+
+    public static Cursor getCursor(Activity context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        int dayWindow = Integer.parseInt(sp.getString("daywindow", "30"));
+        long epoch = Calendar.getInstance().getTimeInMillis();
+        epoch -= (dayWindow * 86400000l);
+
+        return context.getContentResolver().query(CallLog.Calls.CONTENT_URI, null, CallLog.Calls.TYPE + "='" + CallLog.Calls.OUTGOING_TYPE + "' AND " + CallLog.Calls.DATE + ">" + epoch, null, CallLog.Calls.DATE);
     }
 }
