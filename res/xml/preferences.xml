@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference  android:dialogTitle="Net usage"
+                         android:dialogMessage="Net usage by month in MByte"
+                         android:key="netusage"
+                         android:numeric="integer"
+                         android:title="Net usage"
+                         android:summary="Net usage by month"
+                         android:defaultValue="0"/>
+
+    <EditTextPreference  android:dialogTitle="Day window"
+                         android:dialogMessage="Calculate with the last X day"
+                         android:key="daywindow"
+                         android:numeric="integer"
+                         android:title="Day window"
+                         android:summary="Calculate with the last X day"
+                         android:defaultValue="0"/>
+
+
+</PreferenceScreen>
+
+
