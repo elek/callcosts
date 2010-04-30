@@ -31,13 +31,13 @@
         <repository>
             <id>anzix</id>
             <name>Anzix</name>
-            <url>scp://anzix.net/home/elek/wwwroot/anzix.net/maven</url>
+            <url>http://anzix.net/nexus/content/repositories/releases</url>
         </repository>
         <!-- use the following if you ARE using a snapshot version. -->
         <snapshotRepository>
             <id>anzix-snapshot</id>
             <name>Anzix snapshot</name>
-            <url>scp://anzix.net/home/elek/wwwroot/anzix.net/maven</url>
+            <url>http://anzix.net/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
 
