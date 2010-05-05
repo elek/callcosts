@@ -40,13 +40,13 @@
             <url>http://anzix.net/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyMMddHHmm</maven.build.timestamp.format>
+        <buildNumber>${maven.build.timestamp}</buildNumber>
+    </properties>
     <build>
-        <properties>
-            <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-            <maven.build.timestamp.format>yyMMddHHmm</maven.build.timestamp.format>
-            <buildNumber>${maven.build.timestamp}</buildNumber>
-        </properties>
+
         <!--<finalName>${artifactId}</finalName>-->
         <plugins>
             <plugin>
@@ -85,6 +85,7 @@
                         <path>${android.sdk}</path>
                         <platform>7</platform>
                     </sdk>
+                    <androidManifestFile>target/AndroidManifest.xml</androidManifestFile>
                     <deleteConflictingFiles>true</deleteConflictingFiles>
                     <sign>
                         <debug>false</debug>
@@ -148,9 +149,5 @@
             </plugin>
         </plugins>
     </build>
-
-
-
-    </profiles>
 </project>
 
