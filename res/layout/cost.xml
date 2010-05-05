@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:id="@+id/LinearLayout01"
-              android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_height="wrap_content">
-
-
+<RelativeLayout  android:id="@+id/RelativeLayout01"
+ android:layout_width="fill_parent"
+ android:layout_height="?android:attr/listPreferredItemHeight"
+ xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:id="@+id/plan" android:text="Vitamax Standard"
+        android:layout_height="wrap_content"
+        android:id="@+id/plan"
+        android:text="Vitamax Standard"
+        android:layout_centerVertical="true"
         android:paddingLeft="6dip"
         android:gravity="center_vertical|left"
         android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
@@ -18,5 +19,18 @@
         android:id="@+id/cost"
         android:layout_width="fill_parent"
         android:gravity="right|center_vertical"
+         android:layout_toRightOf="@id/plan"
         android:textAppearance="?android:attr/textAppearanceLarge"></TextView>
-</LinearLayout>
+
+   <TextView
+        android:paddingLeft="6dip"
+        android:text="Vodafone"
+        android:id="@+id/providert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left|center_vertical"
+        android:layout_below="@id/plan"
+        android:layout_alignLeft="@id/plan"
+        android:textAppearance="?android:attr/textAppearanceSmall"></TextView>
+
+</RelativeLayout>

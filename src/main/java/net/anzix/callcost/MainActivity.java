@@ -83,7 +83,7 @@ public class MainActivity extends ListActivity {
                 return i1.compareTo(i2);
             }
         });
-        SimpleAdapter adapter = new SimpleAdapter(this, result, R.layout.cost, new String[]{"callplan", "cost"}, new int[]{R.id.plan, R.id.cost});
+        SimpleAdapter adapter = new SimpleAdapter(this, result, R.layout.cost, new String[]{"provider","callplan", "cost"}, new int[]{R.id.plan, R.id.cost});
         setListAdapter(adapter);
     }
 
