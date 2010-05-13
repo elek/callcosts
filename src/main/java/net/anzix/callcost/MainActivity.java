@@ -1,6 +1,12 @@
 package net.anzix.callcost;
 
 import android.app.AlertDialog;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import net.anzix.callcost.api.World;
+import net.anzix.callcost.api.Country;
+import net.anzix.callcost.api.Plan;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,19 +18,20 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.provider.CallLog;
 import android.util.Log;
 import android.widget.SimpleAdapter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.anzix.callcost.custom.CustomLoader;
 
 public class MainActivity extends ListActivity {
 
@@ -32,14 +39,15 @@ public class MainActivity extends ListActivity {
 
     private static final int MENU_SETTINGS = 1;
 
-    private static final int MENU_REFRESH = 2;
+    private static final int MENU_RELOAD = 2;
 
-    private Hungary hungary = new Hungary();
+    private static final int MENU_REFRESH = 3;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_REFRESH, 0, "Refresh");
-        menu.add(0, MENU_SETTINGS, 1, "Preferences");
+        menu.add(0, MENU_RELOAD, 1, "Reload ext.");
+        menu.add(0, MENU_SETTINGS, 2, "Preferences");
         return true;
 
     }
@@ -54,6 +62,9 @@ public class MainActivity extends ListActivity {
             case MENU_REFRESH:
                 refresh();
                 return true;
+            case MENU_RELOAD:
+                reload(World.instance());
+                return true;
 
         }
         return false;
@@ -61,16 +72,19 @@ public class MainActivity extends ListActivity {
 
     public void refresh() {
         result.clear();
-        Cursor c = Utils.getCursor(this);
+        Cursor c = AndroidUtils.getCursor(this);
         startManagingCursor(c);
-        DestinationTypeDetector detect = new DestinationTypeDetector();
 
-        Collection<Plan> plans = hungary.getAllPlans();
+        Country country = World.instance().getCurrentCountry();
+        Log.i("callcost", "" + country.getProviders().size());
+        Log.i("callcost", "" + country.getNumberParser());
+
+        Collection<Plan> plans = country.getAllPlans();
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));
 
-        result = Utils.calculateplans(plans, c, detect, requiredNet);
+        result = AndroidUtils.calculateplans(plans, c, country.getNumberParser(), requiredNet);
 
         //calculate net usage
 
@@ -82,16 +96,80 @@ public class MainActivity extends ListActivity {
                 return i1.compareTo(i2);
             }
         });
-        SimpleAdapter adapter = new SimpleAdapter(this, result, R.layout.cost, new String[]{"callplan", "cost"}, new int[]{R.id.plan, R.id.cost});
+        SimpleAdapter adapter = new SimpleAdapter(this, result, R.layout.cost, new String[]{"provider", "callplan", "cost"}, new int[]{R.id.providert, R.id.plan, R.id.cost});
         setListAdapter(adapter);
+    }
+
+    public void reload(World instance) {
+        File f = new File(Environment.getExternalStorageDirectory() + "/callcost.def");
+        if (f.exists()) {
+            FileInputStream fis = null;
+            try {
+                CustomLoader loader = new CustomLoader();
+                fis = new FileInputStream(f);
+                loader.read(instance, fis);
+                fis.close();
+            } catch (Exception ex) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Error on loading external file " + f.getAbsolutePath());
+                builder.setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+                Log.e("callcost", "Error on loading external file", ex);
+            } finally {
+                try {
+                    fis.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refresh();
     }
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.plans);
-        refresh();
+        try {
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+            String countryCode = sp.getString("country", "hu");
+            World instance = World.instance();
+            CustomLoader loader = new CustomLoader();
+            InputStream st = getResources().openRawResource(R.raw.hungary);
+            loader.read(instance, st);
+            st.close();
+
+            reload(instance);
+
+            try {
+                instance.changeCountry(countryCode);
+            } catch (IllegalArgumentException ex) {
+                //if deleted the country
+                if (World.instance().getCountries().size() > 0) {
+                    Country c = World.instance().getCountries().iterator().next();
+                    World.instance().changeCountry(c.getId());
+                }
+            }
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.plans);
+        } catch (IOException ex) {
+            Log.e("callcost", "Error on loading coutries", ex);
+        }
     }
 
     @Override

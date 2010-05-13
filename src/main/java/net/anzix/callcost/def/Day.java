@@ -33,6 +33,31 @@ public class Day {
 
     }
 
+    public static Day valueOf(String value) {
+        if (value.equals("MONDAY")) {
+            return new Day("1000000");
+        } else if (value.equals("TUESDAY")) {
+            return new Day("0100000");
+        } else if (value.equals("WEDNESDAY")) {
+            return new Day("0010000");
+        } else if (value.equals("THURSDAY")) {
+            return new Day("0001000");
+        } else if (value.equals("FRIDAY")) {
+            return new Day("0000100");
+        } else if (value.equals("SATURDAY")) {
+            return new Day("0000010");
+        } else if (value.equals("SUNDAY")) {
+            return new Day("0000001");
+        } else if (value.equals("WEEKDAY")) {
+            return WEEKDAY;
+        } else if (value.equals("WEEKEND")) {
+            return WEEKEND;
+        } else {
+            return ALL;
+        }
+
+    }
+
     public int dayBits(int calDay) {
         switch (calDay) {
             case Calendar.MONDAY:

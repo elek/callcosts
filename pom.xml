@@ -40,10 +40,38 @@
             <url>http://anzix.net/nexus/content/repositories/snapshots</url>
         </snapshotRepository>
     </distributionManagement>
-
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyMMddHHmm</maven.build.timestamp.format>
+        <buildNumber>${maven.build.timestamp}</buildNumber>
+    </properties>
     <build>
+
         <!--<finalName>${artifactId}</finalName>-->
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <id>copy-prod-resources</id>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/manifest/</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
@@ -57,7 +85,11 @@
                         <path>${android.sdk}</path>
                         <platform>7</platform>
                     </sdk>
+                    <androidManifestFile>target/AndroidManifest.xml</androidManifestFile>
                     <deleteConflictingFiles>true</deleteConflictingFiles>
+                    <sign>
+                        <debug>false</debug>
+                    </sign>
                 </configuration>
                 <extensions>true</extensions>
             </plugin>
@@ -69,72 +101,53 @@
                     <target>1.5</target>
                 </configuration>
             </plugin>
-
-        </plugins>
-    </build>
-    <profiles>
-        <profile>
-            <id>sign</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-jarsigner-plugin</artifactId>
-                        <version>1.2</version>
-                        <executions>
-                            <execution>
-                                <id>signing</id>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                                <phase>package</phase>
-                                <inherited>true</inherited>
-                                <configuration>
-                                    <archiveDirectory />
-                                    <includes>
-                                        <include>target/*.apk</include>
-                                    </includes>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-		<plugin>
-                        <groupId>com.jayway.maven.plugins.android.generation2</groupId>
-                        <artifactId>maven-android-plugin</artifactId>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jarsigner-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <id>signing</id>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <phase>package</phase>
                         <inherited>true</inherited>
                         <configuration>
-                            <sign>
-                                <debug>false</debug>
-                            </sign>
+                            <archiveDirectory />
+                            <includes>
+                                <include>target/*.apk</include>
+                            </includes>
                         </configuration>
-                    </plugin>
-               
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.1.1</version>
-                        <executions>
-                            <execution>
-                                <id>zipalign</id>
-                                <goals>
-                                    <goal>exec</goal>
-                                </goals>
-                                <phase>package</phase>
-                                <configuration>
-                                    <executable>${android.sdk}/tools/zipalign</executable>
-                                    <arguments>
-                                        <argument>-f</argument>
-                                        <argument>4</argument>
-                                        <argument>target/${project.build.finalName}.apk</argument>
-                                        <argument>target/${project.build.finalName}-zipped.apk</argument>
-                                    </arguments>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.1.1</version>
+                <executions>
+                    <execution>
+                        <id>zipalign</id>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <executable>${android.sdk}/tools/zipalign</executable>
+                            <arguments>
+                                <argument>-f</argument>
+                                <argument>4</argument>
+                                <argument>target/${project.build.finalName}.apk</argument>
+                                <argument>target/${project.build.finalName}-zipped.apk</argument>
+                            </arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
 

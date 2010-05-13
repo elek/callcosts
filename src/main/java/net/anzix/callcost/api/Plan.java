@@ -1,4 +1,4 @@
-package net.anzix.callcost;
+package net.anzix.callcost.api;
 
 import java.util.Calendar;
 
@@ -10,19 +10,17 @@ public interface Plan {
 
     public boolean isPrepaid();
 
+    public String getId();
+
     public String getName();
 
-    public int addCall(Calendar time, String to, int durationSec);
+    public int getCost(CallList list);
 
     public int addSMS(Calendar time, String to);
 
-    public int getCosts();
-
     public int getIncludedNet();
 
+    public void setProvider(Provider provider);
+
     public Provider getProvider();
-
-    public void reset();
-
-    public String getId();
 }

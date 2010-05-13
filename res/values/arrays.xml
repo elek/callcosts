@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<resources>
+
+    <string-array name="countries">
+        <item>Hungary</item>
+        <item>India (Experimental)</item>
+    </string-array>
+
+    <string-array name="country_codes">
+        <item>hu</item>
+        <item>in</item>
+    </string-array>
+
+
+</resources>

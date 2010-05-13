@@ -1,29 +1,27 @@
-package net.anzix.callcost;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package net.anzix.callcost.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import net.anzix.callcost.pannon.Telenor;
-import net.anzix.callcost.tmobile.TMobile;
-import net.anzix.callcost.vodafone.Vodafone;
 
 /**
  *
  * @author elek
  */
-public class Hungary implements Country{
+public abstract class AbstractCountry implements Country {
 
     private List<Provider> providers = new ArrayList<Provider>();
 
     private Map<String, Plan> plans = null;
 
-    public Hungary() {
-        providers.add(new Vodafone());
-        providers.add(new TMobile());
-        providers.add(new Telenor());
+    public void addProvider(Provider p) {
+        providers.add(p);
     }
 
     public List<Provider> getProviders() {

@@ -1,4 +1,4 @@
-package net.anzix.callcost;
+package net.anzix.callcost.api;
 
 /**
  *

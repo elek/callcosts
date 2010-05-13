@@ -1,17 +1,22 @@
 package net.anzix.callcost;
 
+import net.anzix.callcost.api.World;
+import net.anzix.callcost.api.CallRecord;
+import net.anzix.callcost.api.Country;
+import net.anzix.callcost.api.Plan;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.CallLog;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.anzix.callcost.api.CallList;
 
 /**
  *
@@ -19,49 +24,65 @@ import java.util.Map;
  */
 public class CallLogActivity extends ListActivity {
 
-    private Hungary hungary = new Hungary();
-
     List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+
+    private CallList cl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log);
 
-        Plan p = hungary.getPlan(getIntent().getExtras().getString("planid"));
-        p.reset();
+        Country country = World.instance().getCurrentCountry();
 
-        
-        Cursor c = Utils.getCursor(this);
+        Plan p = country.getPlan(getIntent().getExtras().getString("planid"));
+        //p.reset();
 
+
+        Cursor c = AndroidUtils.getCursor(this);
         startManagingCursor(c);
-        DestinationTypeDetector detect = new DestinationTypeDetector();
-        if (c.moveToFirst()) {
-            do {
-                Map<String, String> item = new HashMap<String, String>();
-                Calendar cal = Calendar.getInstance();
-                Date date = new Date(c.getLong(c.getColumnIndex(CallLog.Calls.DATE)));
-                cal.setTime(date);
-                String number = c.getString(c.getColumnIndex(CallLog.Calls.NUMBER));
-                String destination = detect.detect(number);
-                Log.i("callcost", number + " " + destination);
-                int duration = c.getInt(c.getColumnIndex(CallLog.Calls.DURATION));
-                String name = c.getString(c.getColumnIndex(CallLog.Calls.CACHED_NAME));
-                if (name != null && name.length() > 0) {
-                    item.put("name", name);
-                } else {
-                    item.put("name", number);
-                }
-                item.put("cost", "" + p.addCall(cal, destination, duration) + " Ft");
-                item.put("duration", duration + " s");
-                item.put("type", destination);
-                if (duration > 0) {
-                    list.add(item);
-                }
-            } while (c.moveToNext());
+        cl = AndroidUtils.getCallListFromCursor(c, country.getNumberParser());
+
+
+        p.getCost(cl);
+        setListAdapter(new CallListAdapter(cl));
+    }
+
+    class CallListAdapter extends BaseAdapter {
+
+        CallList calllist;
+
+        private final LayoutInflater mInflater;
+
+        public CallListAdapter(CallList cl) {
+            this.calllist = cl;
+            mInflater = LayoutInflater.from(CallLogActivity.this);
         }
 
-        SimpleAdapter adapter = new SimpleAdapter(this, list, R.layout.event, new String[]{"name", "cost", "duration", "type"}, new int[]{R.id.name, R.id.cost, R.id.duration, R.id.type});
-        setListAdapter(adapter);
+        public int getCount() {
+            return calllist.getCalls().size();
+        }
+
+        public Object getItem(int arg0) {
+            return calllist.getCalls().get(arg0);
+        }
+
+        public long getItemId(int arg0) {
+            return arg0;
+        }
+
+        public View getView(int position, View view, ViewGroup viewgroup) {
+            CallRecord cr = calllist.getCalls().get(position);
+            if (view == null) {
+                view = mInflater.inflate(R.layout.event, null);
+            } else {
+            }
+            ((TextView)view.findViewById(R.id.cost)).setText(cr.getCalculatedCost()+" "+ World.instance().getCurrentCountry().getCurrency());
+            ((TextView)view.findViewById(R.id.duration)).setText(cr.getDuration()+" s");
+            ((TextView)view.findViewById(R.id.type)).setText(cr.getDestination());
+            ((TextView)view.findViewById(R.id.name)).setText(cr.getName());
+
+            return view;
+        }
     }
 }
