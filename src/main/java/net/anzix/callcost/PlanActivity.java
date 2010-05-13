@@ -1,5 +1,9 @@
 package net.anzix.callcost;
 
+import net.anzix.callcost.api.DestinationTypeDetector;
+import net.anzix.callcost.api.World;
+import net.anzix.callcost.api.Country;
+import net.anzix.callcost.api.Plan;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -55,9 +59,9 @@ public class PlanActivity extends ListActivity {
         Country country = World.instance().getCurrentCountry();
         p = country.getPlan(getIntent().getExtras().getString("planid"));
 
-        p.reset();
+//        p.reset();
 
-        Cursor c = Utils.getCursor(this);
+        Cursor c = AndroidUtils.getCursor(this);
 
         startManagingCursor(c);
         DestinationTypeDetector detect = country.getNumberParser();
@@ -65,7 +69,7 @@ public class PlanActivity extends ListActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));
 
-        Map<String, Object> result = Utils.calculateplans(p, c, detect, requiredNet);
+        Map<String, Object> result = AndroidUtils.calculateplans(p, c, detect, requiredNet);
 
         List<Map<String, String>> list = new ArrayList();
 

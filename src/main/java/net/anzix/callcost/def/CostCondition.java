@@ -18,7 +18,7 @@ public class CostCondition {
 
     private int toHour = 24;
 
-    private Set<String> toConstraints = new HashSet();
+    private Set<String> destinations = new HashSet();
 
     private Set<Day> dayConstraints = new HashSet();
 
@@ -38,8 +38,8 @@ public class CostCondition {
         return this;
     }
 
-    public CostCondition to(String constraint) {
-        toConstraints.add(constraint);
+    public CostCondition addDestination(String constraint) {
+        destinations.add(constraint);
         return this;
     }
 
@@ -56,9 +56,9 @@ public class CostCondition {
         if (hour >= toHour) {
             return false;
         }
-        if (toConstraints.size() > 0) {
+        if (destinations.size() > 0) {
             boolean matched = false;
-            for (String to : toConstraints) {
+            for (String to : destinations) {
                 if (to.equals("*") || to.equals(tono)) {
                     matched = true;
                     break;

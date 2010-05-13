@@ -2,9 +2,12 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.anzix.callcost;
+package net.anzix.callcost.api;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import net.anzix.callcost.def.CostCondition;
 
 /**
  *
@@ -17,6 +20,8 @@ public abstract class AbstractPlan implements Plan {
     private int monthlyCost = 0;
 
     private Provider provider;
+
+    private List<CostCondition> conds = new ArrayList();
 
     public int addCall(Calendar time, String to, int durationSec) {
         int call = call(time, to, durationSec);
@@ -63,7 +68,7 @@ public abstract class AbstractPlan implements Plan {
         return monthlyCost;
     }
 
-      public String getId() {
-        return getProvider().getName()+"--"+getName();
+    public String getId() {
+        return getProvider().getName() + "--" + getName();
     }
 }
