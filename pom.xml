@@ -3,7 +3,7 @@
     <groupId>net.anzix.android</groupId>
     <artifactId>callcosts</artifactId>
     <packaging>apk</packaging>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
     <name>Call costs</name>
     <scm>
         <connection>scm:git:git@github.com:elek/callcosts.git</connection>
