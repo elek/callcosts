@@ -43,11 +43,14 @@ public class MainActivity extends ListActivity {
 
     private static final int MENU_REFRESH = 3;
 
+    private static final int MENU_ABOUT = 4;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.add(0, MENU_REFRESH, 0, "Refresh");
         menu.add(0, MENU_RELOAD, 1, "Reload ext.");
         menu.add(0, MENU_SETTINGS, 2, "Preferences");
+        menu.add(0, MENU_ABOUT, 3, "About");
         return true;
 
     }
@@ -64,6 +67,16 @@ public class MainActivity extends ListActivity {
                 return true;
             case MENU_RELOAD:
                 reload(World.instance());
+                return true;
+            case MENU_ABOUT:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Call costs");
+                builder.setMessage("For bugs, issues or feedback go to http://wiki.github.com/elek/callcosts/\n\n"
+                        + "You can use custom files to define plans from your country, see the documentation at the linke above. "
+                        + "Feel free to contant me if you have a problem or if you would like to include your country in the main application releases." +
+                        "\n\n Buttons help:\nReload ext. -- reload external definition from sdcard\nRefresh -- recalculate suggestions").setCancelable(true);
+                AlertDialog alert = builder.create();
+                alert.show();
                 return true;
 
         }
