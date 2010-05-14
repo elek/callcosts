@@ -114,7 +114,7 @@ public class MainActivity extends ListActivity {
     }
 
     public void reload(World instance) {
-        File f = new File(Environment.getExternalStorageDirectory() + "/callcost.def");
+        File f = new File(Environment.getExternalStorageDirectory() + "/callcosts.def");
         if (f.exists()) {
             FileInputStream fis = null;
             try {
