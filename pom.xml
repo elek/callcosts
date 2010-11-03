@@ -4,7 +4,7 @@
     <groupId>net.anzix.android</groupId>
     <artifactId>callcosts</artifactId>
     <packaging>apk</packaging>
-    <version>1.4</version>
+    <version>1.5-SNAPSHOT</version>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
