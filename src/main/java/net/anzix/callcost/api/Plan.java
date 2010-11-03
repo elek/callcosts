@@ -1,5 +1,6 @@
 package net.anzix.callcost.api;
 
+import net.anzix.callcost.data.CallList;
 import java.util.Calendar;
 
 /**
@@ -16,7 +17,9 @@ public interface Plan {
 
     public int getCost(CallList list);
 
-    public int addSMS(Calendar time, String to);
+    public int getSMSCost(CallList list);
+
+    public int getNetCost(int usage);
 
     public int getIncludedNet();
 

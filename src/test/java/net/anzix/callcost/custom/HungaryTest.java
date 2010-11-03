@@ -4,25 +4,21 @@
  */
 package net.anzix.callcost.custom;
 
-import net.anzix.callcost.custom.CustomLoader;
-import net.anzix.callcost.custom.CallPlan;
-import net.anzix.callcost.custom.CustomCountry;
-import net.anzix.callcost.custom.PatternTypeDetector;
+import net.anzix.callcost.Calculator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Map;
 
-import net.anzix.callcost.api.CallList;
-import net.anzix.callcost.api.CallRecord;
+import net.anzix.callcost.data.CallList;
+import net.anzix.callcost.data.CallRecord;
 import net.anzix.callcost.api.Country;
 import net.anzix.callcost.api.Provider;
-import net.anzix.callcost.api.Tools;
 
 import net.anzix.callcost.api.World;
+import net.anzix.callcost.data.CalculationResult;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -54,7 +50,7 @@ public class HungaryTest {
         assertNotNull(ptd.getMap());
 
 
-        assertEquals(3, c.getProviders().size());
+        assertEquals(4, c.getProviders().size());
         Provider tmobile = c.getProvider("hu.tmobile");
         assertNotNull(tmobile);
         assertTrue(tmobile.getPlans().size() > 0);
@@ -62,18 +58,19 @@ public class HungaryTest {
         CallList list = new CallList();
         list.addCall(new CallRecord("06701234567", Calendar.getInstance(), 23));
         assertTrue("Not enough plan", c.getAllPlans().size() > 0);
-        List<Map<String, Object>> result = Tools.calculateplans(c.getAllPlans(), list, c.getNumberParser(), 150);
+        List<CalculationResult> result = Calculator.calculateplans(c.getAllPlans(), list, 500);
         assertTrue(result.size() > 0);
-        for (Map<String, Object> record : result) {
-            System.out.println(record.get("planid"));
-            System.out.println(record.get("cost"));
-            System.out.println(record.get("netplan"));
-            System.out.println(record.get("netcost"));
+        for (CalculationResult record : result) {
+            System.out.println(record.getPlan().getName());
+            System.out.println(record.getAllCosts() + "=" + record.getCallCost() + "+" + record.getNetCost() + "+" + record.getSmsCost());
+            if (record.getNetPlan() != null) {
+                System.out.println(record.getNetPlan().getName());
+            }
         }
 
         assertEquals(3, tmobile.getNetPlans().size());
 
-        
+
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd HHmm");
         list = new CallList();
@@ -85,7 +82,7 @@ public class HungaryTest {
         cal2.setTime(sdf.parse("100510 1253"));
 
         list.addCall(new CallRecord("VODAFONE", cal1, 65));
-        list.addCall(new CallRecord("TMOBILE", cal2, 23));        
+        list.addCall(new CallRecord("TMOBILE", cal2, 23));
         list.addCall(new CallRecord("VODAFONE", cal2, 65));
 
         CallPlan p = (CallPlan) c.getPlan("hu.vodafone.vitamaxk");

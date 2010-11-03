@@ -2,10 +2,13 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.anzix.callcost.api;
+package net.anzix.callcost;
 
 import java.util.ArrayList;
 import java.util.List;
+import net.anzix.callcost.api.NetPlan;
+import net.anzix.callcost.api.Plan;
+import net.anzix.callcost.api.Provider;
 
 /**
  *

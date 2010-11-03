@@ -1,22 +1,21 @@
-package net.anzix.callcost;
+package net.anzix.callcost.ui;
 
 import net.anzix.callcost.api.World;
-import net.anzix.callcost.api.CallRecord;
+import net.anzix.callcost.data.CallRecord;
 import net.anzix.callcost.api.Country;
 import net.anzix.callcost.api.Plan;
 import android.app.ListActivity;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import net.anzix.callcost.api.CallList;
+import net.anzix.callcost.CallLogProvider;
+import net.anzix.callcost.data.CallList;
 
 /**
  *
@@ -28,6 +27,8 @@ public class CallLogActivity extends ListActivity {
 
     private CallList cl;
 
+    private CallLogProvider clp = CallLogProvider.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +38,7 @@ public class CallLogActivity extends ListActivity {
 
         Plan p = country.getPlan(getIntent().getExtras().getString("planid"));
         //p.reset();
-
-
-        Cursor c = AndroidUtils.getCursor(this);
-        startManagingCursor(c);
-        cl = AndroidUtils.getCallListFromCursor(c, country.getNumberParser());
-
+        cl = clp.getCallList(this);
 
         p.getCost(cl);
         setListAdapter(new CallListAdapter(cl));
@@ -75,12 +71,11 @@ public class CallLogActivity extends ListActivity {
             CallRecord cr = calllist.getCalls().get(position);
             if (view == null) {
                 view = mInflater.inflate(R.layout.event, null);
-            } else {
             }
-            ((TextView)view.findViewById(R.id.cost)).setText(cr.getCalculatedCost()+" "+ World.instance().getCurrentCountry().getCurrency());
-            ((TextView)view.findViewById(R.id.duration)).setText(cr.getDuration()+" s");
-            ((TextView)view.findViewById(R.id.type)).setText(cr.getDestination());
-            ((TextView)view.findViewById(R.id.name)).setText(cr.getName());
+            ((TextView) view.findViewById(R.id.cost)).setText(cr.getCalculatedCost() + " " + World.instance().getCurrentCountry().getCurrency());
+            ((TextView) view.findViewById(R.id.duration)).setText(cr.getDuration() + " s");
+            ((TextView) view.findViewById(R.id.type)).setText(cr.getDestination());
+            ((TextView) view.findViewById(R.id.name)).setText(cr.getName());
 
             return view;
         }

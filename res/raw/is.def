@@ -1,0 +1,11 @@
+is=Iceland (experimental)
+is[currency]=kr.
+is[divider]=0
+
+is.vodafone=Vodafone
+
+is.vodafone.scp=Super cell phone
+is.vodafone.scp[monthlyFee]=1650
+is.vodafone.scp[pricePerMinute]=16
+is.vodafone.scp[sms]=16
+

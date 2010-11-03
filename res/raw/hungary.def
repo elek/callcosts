@@ -5,7 +5,7 @@ hu[destinations][1][name]=TMOBILE
 hu[destinations][1][pattern]=(\+36|06)30\d{7}
 hu[destinations][2][name]=VODAFONE
 hu[destinations][2][pattern]=(\+36|06)70\d{7}
-hu[destinations][3][name]=PANNON
+hu[destinations][3][name]=TELENOR
 hu[destinations][3][pattern]=(\+36|06)20\d{7}
 hu[destinations][4][name]=TCOM
 hu[destinations][4][pattern]=(\+36|06)1\d{7}
@@ -16,42 +16,65 @@ hu.vodafone.50plus=50 plus
 hu.vodafone.50plus[monthlyFee]=1750
 hu.vodafone.50plus[freeMinutes]=50
 hu.vodafone.50plus[pricePerMin]=35
+hu.vodafone.50plus[sms]=35
+
+hu.vodafone.50surf=50 plus surf
+hu.vodafone.50surf[monthlyFee]=2750
+hu.vodafone.50surf[freeMinutes]=50
+hu.vodafone.50surf[pricePerMin]=35
+hu.vodafone.50surf[sms]=35
+hu.vodafone.50surf[[netIncluded]=100
+
 
 hu.vodafone.100plus=100 plus
 hu.vodafone.100plus[monthlyFee]=3000
 hu.vodafone.100plus[freeMinutes]=100
 hu.vodafone.100plus[pricePerMin]=33
+hu.vodafone.100plus[sms]=33
+hu.vodafone.100plus[freeSms]=1000
 
 hu.vodafone.200plus=200 plus
 hu.vodafone.200plus[monthlyFee]=5000
 hu.vodafone.200plus[freeMinutes]=200
 hu.vodafone.200plus[pricePerMin]=29
+hu.vodafone.200plus[sms]=29
+hu.vodafone.200plus[freeSms]=1000
 
 hu.vodafone.400plus=400 plus
 hu.vodafone.400plus[monthlyFee]=8000
 hu.vodafone.400plus[freeMinutes]=400
 hu.vodafone.400plus[pricePerMin]=25
+hu.vodafone.400plus[sms]=25
+hu.vodafone.400plus[freeSms]=1000
 
 hu.vodafone.multi5000=Multimédia 5000
 hu.vodafone.multi5000[monthlyFee]=5000
 hu.vodafone.multi5000[freeMinutes]=200
 hu.vodafone.multi5000[pricePerMin]=28
 hu.vodafone.multi5000[netIncluded]=200
+hu.vodafone.multi5000[sms]=28
+hu.vodafone.multi5000[freeSms]=50
 
 hu.vodafone.multi7900=Multimédia 7900
 hu.vodafone.multi7900[monthlyFee]=7900
 hu.vodafone.multi7900[freeMinutes]=300
 hu.vodafone.multi7900[pricePerMin]=24
 hu.vodafone.multi7900[netIncluded]=500
+hu.vodafone.multi7900[sms]=24
+hu.vodafone.multi7900[freeSms]=100
 
 hu.vodafone.multi10500=Multimédia 10500
 hu.vodafone.multi10500[monthlyFee]=10500
 hu.vodafone.multi10500[freeMinutes]=500
 hu.vodafone.multi10500[pricePerMin]=21
 hu.vodafone.multi10500[netIncluded]=3000
+hu.vodafone.multi10500[sms]=21
+hu.vodafone.multi10500[freeSms]=250
+
 
 hu.vodafone.vitamaxs=Vitamax Standard
 hu.vodafone.vitamaxs[pricePerMin]=41
+hu.vodafone.vitamaxs[sms]=41
 hu.vodafone.vitamaxs[prepaid]=true
 
 hu.vodafone.vitamaxk=Vitamax Klub
@@ -128,6 +151,7 @@ hu.tmobile.mms[monthlyFee]=4990
 hu.tmobile.mms[pricePerMinute]=26
 hu.tmobile.mms[includedCost]=4490
 hu.tmobile.mms[netIncluded]=500
+hu.tmobile.mms[sms]=0
 
 hu.tmobile.mmm=Média Mánia M
 hu.tmobile.mmm[monthlyFee]=7990
@@ -140,6 +164,7 @@ hu.tmobile.mml[monthlyFee]=10990
 hu.tmobile.mml[pricePerMinute]=19
 hu.tmobile.mml[includedCost]=10990
 hu.tmobile.mml[netIncluded]=1000
+
 
 hu.tmobile.mmxl=Média Mánia XL
 hu.tmobile.mmxl[monthlyFee]=15990
@@ -162,100 +187,144 @@ hu.tmobile.net500[monthlyFee]=1990
 hu.tmobile.net500[includedMb]=500
 hu.tmobile.net500[pricePerMb]=100
 
-hu.pgsm=Pannon
+hu.telenor=Telenor
 
-hu.pgsm.35=Pannon 35
-hu.pgsm.35[monthlyFee]=1295
-hu.pgsm.35[freeMinutes]=35
-hu.pgsm.35[pricePerMin]=37
+hu.telenor.35=35 Perc
+hu.telenor.35[monthlyFee]=1295
+hu.telenor.35[freeMinutes]=35
+hu.telenor.35[pricePerMin]=37
+hu.telenor.35[sms]=37
 
-hu.pgsm.60=Pannon 60
-hu.pgsm.60[monthlyFee]=2100
-hu.pgsm.60[freeMinutes]=60
-hu.pgsm.60[pricePerMin]=35
+hu.telenor.60=60 Perc
+hu.telenor.60[monthlyFee]=2100
+hu.telenor.60[freeMinutes]=60
+hu.telenor.60[pricePerMin]=35
+hu.telenor.60[sms]=35
 
-hu.pgsm.120=Pannon 120
-hu.pgsm.120[monthlyFee]=3840
-hu.pgsm.120[freeMinutes]=120
-hu.pgsm.120[pricePerMin]=32
+hu.telenor.120=120 Perc
+hu.telenor.120[monthlyFee]=3840
+hu.telenor.120[freeMinutes]=120
+hu.telenor.120[sms]=32
 
-hu.pgsm.180=Pannon 180
-hu.pgsm.180[monthlyFee]=5220
-hu.pgsm.180[freeMinutes]=180
-hu.pgsm.180[pricePerMin]=29
+hu.telenor.180=180 Perc
+hu.telenor.180[monthlyFee]=5220
+hu.telenor.180[freeMinutes]=180
+hu.telenor.180[pricePerMin]=29
+hu.telenor.180[sms]=29
 
-hu.pgsm.360=Pannon 360
-hu.pgsm.360[monthlyFee]=8460
-hu.pgsm.360[freeMinutes]=360
-hu.pgsm.360[pricePerMin]=24
+hu.telenor.360=360 Perc
+hu.telenor.360[monthlyFee]=8460
+hu.telenor.360[freeMinutes]=360
+hu.telenor.360[pricePerMin]=24
+hu.telenor.360[sms]=24
 
-hu.pgsm.600=Pannon 600
-hu.pgsm.600[monthlyFee]=12600
-hu.pgsm.600[freeMinutes]=600
-hu.pgsm.600[pricePerMin]=21
+hu.telenor.600=600 Perc
+hu.telenor.600[monthlyFee]=12600
+hu.telenor.600[freeMinutes]=600
+hu.telenor.600[pricePerMin]=21
+hu.telenor.600[sms]=21
 
-hu.pgsm.1200=Pannon 1200
-hu.pgsm.1200[monthlyFee]=21600
-hu.pgsm.1200[freeMinutes]=1200
-hu.pgsm.1200[pricePerMin]=18
+hu.telenor.1200=1200 perc
+hu.telenor.1200[monthlyFee]=21600
+hu.telenor.1200[freeMinutes]=1200
+hu.telenor.1200[pricePerMin]=18
+hu.telenor.1200[sms]=18
 
-hu.pgsm.f40=40 hívás
-hu.pgsm.f40[monthlyFee]=4960
-hu.pgsm.f40[freeCall]=40
-hu.pgsm.f40[pricePerMin]=124
+hu.telenor.f40=40 hívás
+hu.telenor.f40[monthlyFee]=4960
+hu.telenor.f40[freeCall]=40
+hu.telenor.f40[pricePerMin]=124
+hu.telenor.f40[sms]=32
 
-hu.pgsm.f100=100 hívás
-hu.pgsm.f100[monthlyFee]=8900
-hu.pgsm.f100[freeCall]=100
-hu.pgsm.f100[pricePerMin]=89
+hu.telenor.f100=100 hívás
+hu.telenor.f100[monthlyFee]=8900
+hu.telenor.f100[freeCall]=100
+hu.telenor.f100[pricePerMin]=89
+hu.telenor.f100[sms]=22
 
-hu.pgsm.f200=200 hívás
-hu.pgsm.f200[monthlyFee]=16800
-hu.pgsm.f200[freeCall]=200
-hu.pgsm.f200[pricePerMin]=84
+hu.telenor.f200=200 hívás
+hu.telenor.f200[monthlyFee]=16800
+hu.telenor.f200[freeCall]=200
+hu.telenor.f200[pricePerMin]=84
+hu.telenor.f200[sms]=19
 
-hu.pgsm.imini<Net>=Internet Mini
-hu.pgsm.imini[monthlyFee]=480
-hu.pgsm.imini[includedMb]=20
-hu.pgsm.imini[pricePerMb]=32
+hu.telenor.mos<Net>=Mobile Online S
+hu.telenor.mos[monthlyFee]=480
+hu.telenor.mos[includedMb]=20
+hu.telenor.mos[pricePerMb]=32
 
-hu.pgsm.iclassic<Net>=Internet Classic
-hu.pgsm.iclassic[monthlyFee]=990
-hu.pgsm.iclassic[includedMb]=100
-hu.pgsm.iclassic[pricePerMb]=32
+hu.telenor.mom<Net>=Mobile Online M
+hu.telenor.mom[monthlyFee]=990
+hu.telenor.mom[includedMb]=100
+hu.telenor.mom[pricePerMb]=32
 
-hu.pgsm.iplus<Net>=Internet Plus
-hu.pgsm.iplus[monthlyFee]=1990
-hu.pgsm.iplus[includedMb]=200
-hu.pgsm.iplus[pricePerMb]=-1
+hu.telenor.mol<Net>=Mobile Online L
+hu.telenor.mol[monthlyFee]=1990
+hu.telenor.mol[includedMb]=200
+hu.telenor.mol[pricePerMb]=-1
 
-hu.pgsm.mkv150=Mobile kvartett 150
-hu.pgsm.mkv150[monthlyFee]=4990
-hu.pgsm.mkv150[pricePerMinute]=29
-hu.pgsm.mkv150[freeMinutes]=150
-hu.pgsm.mkv150[netIncluded]=150
+hu.telenor.mostart<Net>=Mobile Online Start
+hu.telenor.mostart[monthlyFee]=0
+hu.telenor.mostart[includedMb]=0
+hu.telenor.mostart[pricePerMb]=1300
 
-hu.pgsm.mkv400=Mobile kvartett 400
-hu.pgsm.mkv400[monthlyFee]=9900
-hu.pgsm.mkv400[pricePerMinute]=29
-hu.pgsm.mkv400[freeMinutes]=400
-hu.pgsm.mkv400[netIncluded]=1000
+hu.telenor.mol<Net>=Mobile Online 5GB
+hu.telenor.mol[monthlyFee]=6240
+hu.telenor.mol[includedMb]=5000
+hu.telenor.mol[pricePerMb]=2
 
-hu.pgsm.mkv800=Mobile kvartett 800
-hu.pgsm.mkv800[monthlyFee]=15000
-hu.pgsm.mkv800[pricePerMinute]=29
-hu.pgsm.mkv800[freeMinutes]=800
-hu.pgsm.mkv800[netIncluded]=3000
+hu.telenor.mkv150=Mobile kvartett 150
+hu.telenor.mkv150[monthlyFee]=4990
+hu.telenor.mkv150[pricePerMinute]=29
+hu.telenor.mkv150[freeMinutes]=150
+hu.telenor.mkv150[netIncluded]=150
+hu.telenor.mkv150[freeSms]=75
+hu.telenor.mkv150[sms]=29
+
+hu.telenor.mkv400=Mobile kvartett 400
+hu.telenor.mkv400[monthlyFee]=9900
+hu.telenor.mkv400[pricePerMinute]=29
+hu.telenor.mkv400[freeMinutes]=400
+hu.telenor.mkv400[netIncluded]=1000
+hu.telenor.mkv400[sms]=29
+hu.telenor.mkv400[freeSms]=200
+
+hu.telenor.mkv800=Mobile kvartett 800
+hu.telenor.mkv800[monthlyFee]=15000
+hu.telenor.mkv800[pricePerMinute]=29
+hu.telenor.mkv800[freeMinutes]=800
+hu.telenor.mkv800[netIncluded]=3000
+hu.telenor.mkv800[sms]=29
+hu.telenor.mkv800[freeSms]=400
 
 
-hu.pgsm.praktikum=Praktikum
-hu.pgsm.praktikum[prepaid]=true
-hu.pgsm.praktikum[rules][1][cost]=41
+hu.telenor.praktikum=Praktikum
+hu.telenor.praktikum[prepaid]=true
+hu.telenor.praktikum[rules][1][cost]=41
 
 
-hu.pgsm.praktikumhb=Praktikum Hálózaton belül
-hu.pgsm.praktikumhb[prepaid]=true
-hu.pgsm.praktikumhb[rules][1][cost]=20
-hu.pgsm.praktikumhb[rules][1][destination]=PGSM
-hu.pgsm.praktikumhb[rules][2][cost]=59
+hu.telenor.praktikumhb=Praktikum Hálózaton belül
+hu.telenor.praktikumhb[prepaid]=true
+hu.telenor.praktikumhb[rules][1][cost]=20
+hu.telenor.praktikumhb[rules][1][destination]=PGSM
+hu.telenor.praktikumhb[rules][2][cost]=59
 
+hu.redbull=RedBull
+
+hu.redbull.simplyall=SimplyAll
+hu.redbull.simplyall[monthlyFee]=5490
+hu.redbull.simplyall[freeSms]=200
+hu.redbull.simplyall[freeMinutes]=200
+hu.redbull.simplyall[netIncluded]=200
+hu.redbull.simplyall[pricePerMinute]=28
+hu.redbull.simplyall[sms]=28
+hu.redbull.simplyall[pricePerMb]=5
+
+hu.redbull.simplyallp=SimplyAll+
+hu.redbull.simplyallp[monthlyFee]=10490
+hu.redbull.simplyallp[freeSms]=400
+hu.redbull.simplyallp[freeMinutes]=400
+hu.redbull.simplyallp[netIncluded]=400
+hu.redbull.simplyallp[pricePerMinute]=24
+hu.redbull.simplyallp[sms]=24
+hu.redbull.simplyallp[pricePerMb]=5

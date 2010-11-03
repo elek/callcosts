@@ -1,6 +1,7 @@
-package net.anzix.callcost;
+package net.anzix.callcost.ui;
 
 import android.app.AlertDialog;
+import android.view.ViewGroup;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,12 +17,13 @@ import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.SimpleAdapter;
+import android.view.LayoutInflater;
+import android.widget.BaseAdapter;
+import android.widget.TextView;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -30,12 +32,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
+import net.anzix.callcost.Calculator;
+import net.anzix.callcost.CallLogProvider;
+import net.anzix.callcost.Tools;
+import net.anzix.callcost.data.CalculationResult;
 import net.anzix.callcost.custom.CustomLoader;
 
+/**
+ * Main application entry point.
+ * 
+ * @author elek
+ */
 public class MainActivity extends ListActivity {
 
-    List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
+    List<CalculationResult> results = new ArrayList<CalculationResult>();
 
     private static final int MENU_SETTINGS = 1;
 
@@ -44,6 +54,8 @@ public class MainActivity extends ListActivity {
     private static final int MENU_REFRESH = 3;
 
     private static final int MENU_ABOUT = 4;
+
+    private CallLogProvider clp = CallLogProvider.getInstance();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,8 +85,8 @@ public class MainActivity extends ListActivity {
                 builder.setTitle("Call costs");
                 builder.setMessage("For bugs, issues or feedback go to http://wiki.github.com/elek/callcosts/\n\n"
                         + "You can use custom files to define plans from your country, see the documentation at the linke above. "
-                        + "Feel free to contant me if you have a problem or if you would like to include your country in the main application releases." +
-                        "\n\n Buttons help:\nReload ext. -- reload external definition from sdcard\nRefresh -- recalculate suggestions").setCancelable(true);
+                        + "Feel free to contant me if you have a problem or if you would like to include your country in the main application releases."
+                        + "\n\n Buttons help:\nReload ext. -- reload external definition from sdcard\nRefresh -- recalculate suggestions").setCancelable(true);
                 AlertDialog alert = builder.create();
                 alert.show();
                 return true;
@@ -84,33 +96,28 @@ public class MainActivity extends ListActivity {
     }
 
     public void refresh() {
-        result.clear();
-        Cursor c = AndroidUtils.getCursor(this);
-        startManagingCursor(c);
+        results.clear();
+
 
         Country country = World.instance().getCurrentCountry();
-        Log.i("callcost", "" + country.getProviders().size());
-        Log.i("callcost", "" + country.getNumberParser());
+        clp.setCountry(country);
 
         Collection<Plan> plans = country.getAllPlans();
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));
 
-        result = AndroidUtils.calculateplans(plans, c, country.getNumberParser(), requiredNet);
+        results = Calculator.calculateplans(plans, clp.getCallList(this), requiredNet);
 
         //calculate net usage
 
-        Collections.sort(result, new Comparator<Map<String, Object>>() {
+        Collections.sort(results, new Comparator<CalculationResult>() {
 
-            public int compare(Map<String, Object> o1, Map<String, Object> o2) {
-                Integer i1 = (Integer) o1.get("costint");
-                Integer i2 = (Integer) o2.get("costint");
-                return i1.compareTo(i2);
+            public int compare(CalculationResult c1, CalculationResult c2) {
+                return c1.getAllCosts().compareTo(c2.getAllCosts());
             }
         });
-        SimpleAdapter adapter = new SimpleAdapter(this, result, R.layout.cost, new String[]{"provider", "callplan", "cost"}, new int[]{R.id.providert, R.id.plan, R.id.cost});
-        setListAdapter(adapter);
+        setListAdapter(new CalculationAdapter(results));
     }
 
     public void reload(World instance) {
@@ -189,23 +196,46 @@ public class MainActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, final int position, long id) {
         super.onListItemClick(l, v, position, id);
         Intent intent = new Intent(this, PlanActivity.class);
-        intent.putExtra("planid", (String) result.get(position).get("planid"));
+        intent.putExtra("planid", ((CalculationResult) results.get(position)).getPlan().getId());
         startActivity(intent);
 
     }
 
-    private static class Result {
+    private class CalculationAdapter extends BaseAdapter {
 
-        public Result(int cost, String plan) {
-            this.cost = cost;
-            this.plan = plan;
+        private List<CalculationResult> results = new ArrayList<CalculationResult>();
+
+        private final LayoutInflater mInflater;
+
+        public CalculationAdapter(List<CalculationResult> result) {
+            this.results = result;
+            this.mInflater = LayoutInflater.from(MainActivity.this);
         }
 
-        public Result() {
+        public int getCount() {
+            return results.size();
         }
-        int cost;
 
-        String plan;
+        public Object getItem(int i) {
+            return results.get(i);
+        }
 
+        public long getItemId(int i) {
+            return i;
+        }
+
+        public View getView(int i, View view, ViewGroup vg) {
+            CalculationResult result = results.get(i);
+            if (view == null) {
+                view = mInflater.inflate(R.layout.cost, vg, false);
+
+            }
+            ((TextView) view.findViewById(R.id.plan)).setText(result.getPlan().getName());
+            ((TextView) view.findViewById(R.id.provider)).setText(result.getProvider().getName());
+            Country country = World.instance().getCurrentCountry();
+            ((TextView) view.findViewById(R.id.cost)).setText(Tools.printNumber(result.getAllCosts(), country));
+            view.requestLayout();
+            return view;
+        }
     }
 }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.anzix.callcost.api;
+package net.anzix.callcost.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,12 +21,20 @@ public class CallList {
         calls.add(call);
     }
 
+    public List<SMSRecord> getSMSs() {
+        return smss;
+    }
+
     public List<CallRecord> getCalls() {
         return calls;
     }
 
     public void setCalls(List<CallRecord> calls) {
         this.calls = calls;
+    }
+
+    public void addSMS(SMSRecord smsRecord) {
+        smss.add(smsRecord);
     }
 
     

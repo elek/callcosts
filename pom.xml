@@ -83,7 +83,7 @@
                 <configuration>
                     <sdk>
                         <path>${android.sdk}</path>
-                        <platform>7</platform>
+                        <platform>3</platform>
                     </sdk>
                     <androidManifestFile>target/AndroidManifest.xml</androidManifestFile>
                     <deleteConflictingFiles>true</deleteConflictingFiles>

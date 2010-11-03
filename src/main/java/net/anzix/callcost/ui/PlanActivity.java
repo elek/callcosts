@@ -1,13 +1,11 @@
-package net.anzix.callcost;
+package net.anzix.callcost.ui;
 
-import net.anzix.callcost.api.DestinationTypeDetector;
 import net.anzix.callcost.api.World;
 import net.anzix.callcost.api.Country;
 import net.anzix.callcost.api.Plan;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -17,6 +15,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import net.anzix.callcost.Calculator;
+import net.anzix.callcost.CallLogProvider;
+import net.anzix.callcost.Tools;
+import net.anzix.callcost.data.CalculationResult;
 
 /**
  *
@@ -27,6 +29,8 @@ public class PlanActivity extends ListActivity {
     private Plan p;
 
     private static final int MENU_DETAILS = 1;
+
+    private CallLogProvider clp = CallLogProvider.getInstance();
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,17 +63,10 @@ public class PlanActivity extends ListActivity {
         Country country = World.instance().getCurrentCountry();
         p = country.getPlan(getIntent().getExtras().getString("planid"));
 
-//        p.reset();
-
-        Cursor c = AndroidUtils.getCursor(this);
-
-        startManagingCursor(c);
-        DestinationTypeDetector detect = country.getNumberParser();
 
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         int requiredNet = Integer.parseInt(sp.getString("netusage", "0"));
-
-        Map<String, Object> result = AndroidUtils.calculateplans(p, c, detect, requiredNet);
+        CalculationResult result = Calculator.calculateplan(p, clp.getCallList(this), requiredNet);
 
         List<Map<String, String>> list = new ArrayList();
 
@@ -84,25 +81,31 @@ public class PlanActivity extends ListActivity {
         list.add(row);
 
         row = new HashMap();
-        row.put("text1", result.get("callcost").toString());
+        row.put("text1", Tools.printNumber(result.getCallCost(), country));
         row.put("text2", "Cost of calls");
         list.add(row);
 
+        row = new HashMap();
+        row.put("text1", Tools.printNumber(result.getSmsCost(), country));
+        row.put("text2", "Cost of SMSs");
+        list.add(row);
 
-        if (result.get("netplan") != null) {
+
+        if (result.getNetPlan() != null) {
             row = new HashMap();
-            row.put("text1", result.get("netplan").toString());
+            row.put("text1", result.getNetPlan().getName());
             row.put("text2", "Suggested net plan");
             list.add(row);
-
+        }
+        if (result.getNetCost() > 0) {
             row = new HashMap();
-            row.put("text1", result.get("netcost").toString());
+            row.put("text1", Tools.printNumber(result.getNetCost(), country));
             row.put("text2", "Cost of net usage");
             list.add(row);
         }
 
         row = new HashMap();
-        row.put("text1", result.get("cost").toString());
+        row.put("text1", Tools.printNumber(result.getAllCosts(), country));
         row.put("text2", "All cost");
         list.add(row);
 

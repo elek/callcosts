@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package net.anzix.callcost.api;
+package net.anzix.callcost;
+
+import net.anzix.callcost.api.NetPlan;
 
 /**
  *

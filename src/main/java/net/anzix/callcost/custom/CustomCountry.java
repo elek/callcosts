@@ -13,7 +13,7 @@ import net.anzix.callcost.api.Country;
 import net.anzix.callcost.api.DestinationTypeDetector;
 import net.anzix.callcost.api.Plan;
 import net.anzix.callcost.api.Provider;
-import net.anzix.callcost.api.Tools;
+import net.anzix.callcost.Tools;
 
 /**
  *

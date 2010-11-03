@@ -1,15 +1,17 @@
 package net.anzix.callcost.custom;
 
+import android.util.Log;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.anzix.callcost.api.CallList;
-import net.anzix.callcost.api.CallRecord;
+import net.anzix.callcost.data.CallList;
+import net.anzix.callcost.data.CallRecord;
 import net.anzix.callcost.api.Plan;
 import net.anzix.callcost.api.Provider;
-import net.anzix.callcost.api.Tools;
+import net.anzix.callcost.data.SMSRecord;
+import net.anzix.callcost.Tools;
 import net.anzix.callcost.def.CostCondition;
 import net.anzix.callcost.def.Day;
 
@@ -117,11 +119,8 @@ public class CallPlan implements Plan, PropertyContainer {
 
 
         }
-        return cost;
-    }
 
-    public int addSMS(Calendar time, String to) {
-        return 0;
+        return cost;
     }
 
     public Map<String, Object> getProperties() {
@@ -169,5 +168,32 @@ public class CallPlan implements Plan, PropertyContainer {
             conds.add(cond);
         }
         properties.remove("rules");
+    }
+
+    public int getSMSCost(CallList list) {
+        int cost = 0;
+        int freeSms = intParam("freeSms", 0);
+        int smsPrice = intParam("sms", 0);
+        for (SMSRecord sms : list.getSMSs()) {
+            if (freeSms > 0) {
+                freeSms--;
+            } else {
+                cost += smsPrice;
+            }
+        }
+        return cost;
+    }
+
+    public int getNetCost(int usage) {
+        int included = getIncludedNet();
+        int pricePerMb = intParam("pricePerMb", -1);
+        if (usage <= included) {
+            return 0;
+        } else if (pricePerMb == -1) {
+            return -1;
+        } else {
+            return (usage - included) * pricePerMb;
+        }
+
     }
 }
