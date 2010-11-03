@@ -38,7 +38,7 @@ public class CustomLoaderTest {
         assertNotNull(word.getCountry("hu"));
         Country c = word.getCountry("hu");
         assertEquals("Ft", c.getCurrency());
-        assertEquals(3, c.getProviders().size());
+        assertEquals(4, c.getProviders().size());
 
 //        Plan p = c.getPlan("hu.tmobile.domino7");
 //        assertNotNull(p);
