@@ -1,4 +1,4 @@
-package net.anzix.callcost.ui;
+package net.anzix.callcost;
 
 import net.anzix.callcost.api.World;
 import net.anzix.callcost.api.Country;
@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import net.anzix.callcost.Calculator;
-import net.anzix.callcost.CallLogProvider;
-import net.anzix.callcost.Tools;
+import net.anzix.callcost.impl.Calculator;
+import net.anzix.callcost.impl.CallLogProvider;
+import net.anzix.callcost.impl.Tools;
 import net.anzix.callcost.data.CalculationResult;
 
 /**

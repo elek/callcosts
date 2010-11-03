@@ -1,4 +1,4 @@
-package net.anzix.callcost;
+package net.anzix.callcost.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;

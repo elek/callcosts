@@ -1,4 +1,4 @@
-package net.anzix.callcost.ui;
+package net.anzix.callcost;
 
 import android.app.AlertDialog;
 import android.view.ViewGroup;
@@ -32,11 +32,12 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import net.anzix.callcost.Calculator;
-import net.anzix.callcost.CallLogProvider;
-import net.anzix.callcost.Tools;
+import net.anzix.callcost.impl.Calculator;
+import net.anzix.callcost.impl.CallLogProvider;
+import net.anzix.callcost.impl.Tools;
 import net.anzix.callcost.data.CalculationResult;
 import net.anzix.callcost.custom.CustomLoader;
+
 
 /**
  * Main application entry point.

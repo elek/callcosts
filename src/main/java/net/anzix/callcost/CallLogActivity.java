@@ -1,4 +1,4 @@
-package net.anzix.callcost.ui;
+package net.anzix.callcost;
 
 import net.anzix.callcost.api.World;
 import net.anzix.callcost.data.CallRecord;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import net.anzix.callcost.CallLogProvider;
+import net.anzix.callcost.impl.CallLogProvider;
 import net.anzix.callcost.data.CallList;
 
 /**

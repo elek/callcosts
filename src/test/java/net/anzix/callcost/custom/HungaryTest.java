@@ -4,7 +4,7 @@
  */
 package net.anzix.callcost.custom;
 
-import net.anzix.callcost.Calculator;
+import net.anzix.callcost.impl.Calculator;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;

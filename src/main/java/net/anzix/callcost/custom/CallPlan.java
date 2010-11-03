@@ -11,7 +11,7 @@ import net.anzix.callcost.data.CallRecord;
 import net.anzix.callcost.api.Plan;
 import net.anzix.callcost.api.Provider;
 import net.anzix.callcost.data.SMSRecord;
-import net.anzix.callcost.Tools;
+import net.anzix.callcost.impl.Tools;
 import net.anzix.callcost.def.CostCondition;
 import net.anzix.callcost.def.Day;
 

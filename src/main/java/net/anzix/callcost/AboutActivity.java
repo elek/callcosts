@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package net.anzix.callcost.ui;
+package net.anzix.callcost;
 
 /**
  *

@@ -4,7 +4,7 @@
  */
 package net.anzix.callcost.api;
 
-import net.anzix.callcost.Tools;
+import net.anzix.callcost.impl.Tools;
 import android.app.Activity;
 import android.database.Cursor;
 import java.util.Collection;
