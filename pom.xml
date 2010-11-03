@@ -4,7 +4,7 @@
     <groupId>net.anzix.android</groupId>
     <artifactId>callcosts</artifactId>
     <packaging>apk</packaging>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
@@ -17,7 +17,7 @@
         <url>scm:git:git@github.com:elek/callcosts.git</url>
         <developerConnection>scm:git:git@github.com:elek/callcosts.git</developerConnection>
     </scm>
-    <url></url>
+    <url />
     <licenses>
         <license>
             <name>GPL</name>
