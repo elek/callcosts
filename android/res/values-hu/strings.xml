@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tarifa ajánló</string>
+    <string name="pref_netusage">Net használat</string>
+    <string name="pref_netusage_desc">A kívánt havi net forgalom Megabyte-ban</string>
+
+    <string name="plan_callog">Hívás lista</string>
+
+    <string name="plan_option_separator">Ajánlott opciók</string>
+    <string name="plan_detail_separator">Részletek</string>
+    
+    <string name="plan_costofcall_desc">Hanghívások költsége</string>
+    <string name="plan_costofsms_desc">SMSek költsége</string>
+    <string name="plan_costmonthly_desc">Havidíj</string>
+
+    <string name="plan_provider_desc">Szolgáltató</string>
+    <string name="plan_plan_desc">Ajánlott tarifa</string>
+    <string name="plan_cost_desc">Teljes költség</string>
+    <string name="plan_option_desc">Ajánlott opció</string>
+    <string name="cost_menu_preferences">Beállítások</string>
+    <string name="cost_menu_about">Névjegy</string>
+    <string name="cost_menu_refresh">Újraszámolás</string>
+
+    <string name="callog">Híváslista</string>
+    <string name="offer">Ajánlat</string>
+    <string name="preferences">Beállítások</string>
+
+    <string name="about">Névjegy</string>
+
+</resources>

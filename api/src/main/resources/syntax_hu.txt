@@ -1,0 +1,94 @@
+szintakszis:
+
+[tipus:id]
+parameter1=value1
+parameter2=value2
+
+
+Tipusok:
+
+--> [country:xx]
+
+Lehetseges parameterek:
+
+name:		Az orszag neve
+currency:	A penznem (csak kiirashoz van jelentosege)
+divider:	Egyelore ez 2. Igazabol azt jelenti, hogy belsoleg milyen pontosan kell a szamokat tarolni, de ez meg kicsit gany.
+destinations:	Ez egy lista a regularis kifejezesekrol es arrol, hogy a ra illo telefonszam milyen szolgaltatohoz tartozik. Tetszoleges string lehet a name, de ugyanazt kell majd a rule-oknak hasznalni.
+
+--> [provider:xx]
+Megj: az id-nek az orszaggal kell kezdodnie
+
+Lehetseges parameterek:
+name:		A szolgaltato neve
+
+--> [plan:xx]
+
+Ez egy tarifa reprezentacioja:
+
+Lehetseges parameterek:
+name:		A tarifa neve
+monthlyFee:	A havi elofizetesi dij
+freeMinutes:	Ingyenes percek havonta
+freeSms:	Ingyenes SMS-ek havonta
+freeUnits:	Ingyenes perc es SMS (pl. ha 90, akkor lehet 50 ingyen percet beszelni es 40 sms-t vagy barmilyen kombinacio)
+pricePerMin:	Percdij, ha az egyseges, ha nem akkor rule-okat kell hasznalni
+pricePerSms:	SMS dij, ha egyseges (ha nem egyseges, akkor egyelore ezt nem lehet definiali. TODO.)
+pricePerCall:	Kapcsolasi dij
+base:		szamlazasi egyseg masodpercben (default: 60)
+includedCost:	lebeszelheto penz.
+netIncluded:	Mennyi net jar a csomaggal
+updated:	Mikor csekkoltuk utoljora a dijakat a honlapon
+options:	Lehetseges opciok definialasa. Lasd lejjebb.
+rules.#.xxx	Szabalyok definialasa percdijakra, ahol a # egy szabaly sorszama, az xxx meg a szabaly parametere. Az elso illeszkedo szabaly alapjan szamolunk.
+
+Lehetseges parameterei a szabalynak:
+cost:		A hivas percdija az adott intervallumban
+from:		Hany oratol el ez a prcfig (x >= from) default: 0
+to:		Hany oraig el a szabaly ( x < to). default: 24
+destination:	Milyen halozatra ervenyes a szabaly (azokat lehet hasznalni, amik az orszag alatt definiava vannak. default: minden halozatra
+days:		Milyen napokra ervenyes (default: a het minden napjara), lehetseges ertekek: ALL, WEEKDAY, WEEKEND, MONDAY, TUESDAY, .... es az angol napok
+
+
+
+Megj: az id-nek az orszaggal kell kezdodnie
+
+--> [option:xx]
+
+Barmilyen valaszthato kiegeszito (ingyen sms-ek, net eleres, stb). Itt csak definialni kell a nevet es a parametereket es a plan-ban kell konkretan id szerint hivatkozni ra.
+Megj: az option-oknak a filben elobbre kell lennie mint a plannak, aki hasznalja.
+
+Lehetseges parameterek:
+name:		Az opcio neve
+type:		Az opcio tipusa
+...		Tipus fuggo egyebb parameterek
+
+Opciobol barmilyen lehet. Ha valami hianyzik, akkor szolj es leprogramozom. Opciokra hivatokzni a plan alol lehet az options hasznalat alapjan. Tehat mindig egy felparameterezett opcio tipusbol kell valasztani, ami mar szerepelt a file-ban.
+
+Lehetseges opcio tipusok es parameterek:
+
+type:		FreeCalls
+freeCalls:	Hany darab ingyenes hivast lehet valasztani havonta
+
+type:		FreeMinutes
+freeMins:	Mennyi perc ingyenes
+destination:	Nem kotelezo, de ha meg van adva, akkor csak ebbe a halozatba lehet hasznalno az ingyenes perceket.
+
+type:		FreeSms
+freeSms:	Hany darab ingyen sms van
+destination:	Mint elobb
+
+type:		Net
+data:		Elhasznalhato adatmennyiseg (Mbyte-ban)
+price:		Mennyibe kerul
+
+
+
+A plan alatt, tetszoleges opcio osszeallithato zarojelezessel es az AND es OR kapcsolatokkal:
+
+opcio1() AND opcio2()   --> jelentese: valaszthato 0, 1 vagy 2 opcio az opcio1 es opcio2-bol. 
+opcio1() OR opcio2()    --> jelentese; valaszthati 0 vagy 1 az opcio1 es opcio2-bol (egymast kizaro kapcsolat)
+
+Az opciok utan mindig kell zarojel. A zarojelben lehetnek parameterek (szam vagy idezojelbe tett szoveg) ez 
+
+-->

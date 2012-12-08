@@ -1,0 +1,9 @@
+allprojects {
+   apply plugin: 'pmd'
+   apply plugin: 'java'
+
+   repositories {
+      mavenCentral();
+   }
+
+}

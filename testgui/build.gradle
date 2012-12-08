@@ -1,0 +1,46 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'idea'
+
+mainClassName = "net.anzix.callcost.test.Tester"
+
+configurations{
+   javac2
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+     compile 'com.intellij:forms_rt:7.0.3'
+     compile 'ch.qos.logback:logback-classic:1.0.7'
+     javac2 group:'com.intellij', name:'javac2', version: '7.0.3'
+     compile project(':api')
+}
+
+task compileJava (overwrite: true,  dependsOn : ':api:assemble') << {
+  new File(projectDir,'build/classes/main').mkdirs();
+  ant.taskdef(name: 'javac2',
+            classname: 'com.intellij.ant.Javac2',
+            classpath: configurations.javac2.asPath)
+  ant.javac2(srcdir: 'src/main/java',
+           classpath: configurations.compile.asPath,
+           destdir: 'build/classes/main',
+           debug: "on",
+           debugLevel: "lines",
+           deprecation: "off",
+           includeAntRuntime: false,
+           optimize: "off",
+           source: sourceCompatibility,
+           target: targetCompatibility
+    )
+ 
+
+}
+
+
+jar {
+   from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+   manifest { attributes 'Main-Class': mainClassName }
+}

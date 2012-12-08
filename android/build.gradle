@@ -1,0 +1,60 @@
+apply plugin: 'pmd';
+
+buildscript {
+  repositories {
+     mavenRepo(url: new File(System.properties['user.home'], '.m2/repository').toURI().toURL()) 
+     mavenCentral(); 
+  }
+  dependencies {
+    classpath 'org.gradle.api.plugins:gradle-android-plugin:1.2.2-SNAPSHOT'
+  }
+
+}
+pmd {
+    ruleSets = ["basic", "android"]
+}
+apply plugin: 'project-report'
+apply plugin: 'android'
+
+
+task copyTask(type: Copy) {
+    from '../api/src/main/resources/hungary.properties'
+    into 'res/raw'
+}
+
+classes.dependsOn copyTask
+
+sourceSets {
+  main {
+    java {
+      srcDir 'src'
+    }
+  }
+}    
+
+dependencies {
+   compile project(':api')
+}
+   
+
+version = "1.9"
+
+androidSignAndAlign  {
+	keyStore = androidKeystore
+	keyAlias = 'android'
+	keyStorePassword = androidStorepwd
+	keyAliasPassword = androidKeypwd
+        sigalg = androidSigalg 
+}
+// Configure the filtering of resources with properties from the Gradle's project scope (2)
+processResources {
+	expand (project.properties)
+}
+
+task configureDebug << {
+    jar.classifier = "debug"
+}
+
+task configureRelease << {
+    proguard.enabled = true
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Call costs</string>
+    <string name="pref_netusage">Net usage</string>
+    <string name="pref_netusage_desc">Prefered net usage by month in MByte</string>
+
+    <string name="plan_callog">Call log</string>
+
+    <string name="plan_option_separator">Suggested options</string>
+    <string name="plan_detail_separator">Details</string>
+
+    <string name="plan_costofcall_desc">Cost of voice calls</string>
+    <string name="plan_costofsms_desc">Cost of short messages</string>
+    <string name="plan_costmonthly_desc">Monthly fee</string>
+
+    <string name="plan_provider_desc">Provider</string>
+    <string name="plan_plan_desc">Suggested call plan</string>
+    <string name="plan_cost_desc">Overall cost</string>
+    <string name="plan_option_desc">Suggested option</string>
+    <string name="cost_menu_preferences">Preferences</string>
+    <string name="cost_menu_about">About</string>
+    <string name="cost_menu_refresh">Refresh</string>
+
+    <string name="callog">Call log</string>
+    <string name="offer">Offer</string>
+    <string name="preferences">Preferences</string>
+
+
+    <string name="about">About</string>
+</resources>
