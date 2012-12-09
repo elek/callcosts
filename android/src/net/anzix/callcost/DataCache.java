@@ -41,7 +41,7 @@ public class DataCache {
 
     private boolean uptodate = true;
 
-    private SQLiteDatabase db;
+    private SQLiteDatabase database;
 
     private boolean enableCache = false;
 
@@ -99,9 +99,8 @@ public class DataCache {
     }
 
     private void retrieveCallLogsFromDb(Context activity) {
-        CallLogHelper helper = new CallLogHelper(activity);
-        db = helper.getWritableDatabase();
-        Cursor c = db.query(CallLogTable.TABLE, CallLogTable.ALL_COLL, null, null, null, null, null);
+
+        Cursor c = getDb(activity).query(CallLogTable.TABLE, CallLogTable.ALL_COLL, null, null, null, null, null);
         if (c.moveToFirst()) {
             do {
                 CallRecord r = new CallRecord(
@@ -118,10 +117,16 @@ public class DataCache {
 
     }
 
+    private SQLiteDatabase getDb(Context activity) {
+        if (database == null || !database.isOpen()) {
+            CallLogHelper helper = new CallLogHelper(activity);
+            database = helper.getWritableDatabase();
+        }
+        return database;
+    }
+
 
     private void parseRules(Context activity, ProgressDialog dialog) {
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(activity);
-        String countryCode = sp.getString("country", "hu");
 
         RuleFileParser loader = new RuleFileParser();
         try {
@@ -155,7 +160,6 @@ public class DataCache {
         if (calls.moveToFirst()) {
             do {
                 int epoch = (int) (calls.getLong(calls.getColumnIndex(CallLog.Calls.DATE)) / 1000);
-                Log.i("CALLOG", "epoch=" + epoch);
                 String number = calls.getString(calls.getColumnIndex(CallLog.Calls.NUMBER));
                 int destination = country.getNumberParser().detect(number);
                 int duration = calls.getInt(calls.getColumnIndex(CallLog.Calls.DURATION));
@@ -179,7 +183,7 @@ public class DataCache {
                     v.put(CallLogTable.COL_DURATION, cr.getDuration());
                     v.put(CallLogTable.COL_NAME, cr.getName());
                     v.put(CallLogTable.COL_PROVIDER, cr.getProvider());
-                    db.insert(CallLogTable.TABLE, null, v);
+                    getDb(activity).insert(CallLogTable.TABLE, null, v);
                 }
             } while (calls.moveToNext());
         }
@@ -233,14 +237,14 @@ public class DataCache {
 
 
     public void terminate() {
-        if (db != null) {
-            db.close();
+        if (database != null) {
+            database.close();
         }
 
     }
 
     public void cleanDbCache(Context context) {
-        db.execSQL("DELETE FROM " + CallLogTable.TABLE);
+        getDb(context).execSQL("DELETE FROM " + CallLogTable.TABLE);
         callList = new CallList();
         load(context);
         invalidate();

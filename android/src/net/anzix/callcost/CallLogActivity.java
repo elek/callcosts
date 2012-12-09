@@ -43,7 +43,7 @@ public class CallLogActivity extends ListActivity {
         for (CallRecord rec : clp.getCallList().getCalls()) {
             list.add(new ListElement(
                     rec.getName(),
-                    sdf.format(rec.getDate().getTime()) + " / " + rec.getDuration() + " s / " + rec.getProvider(),
+                    sdf.format(rec.getDate().getTime()) + " / " + rec.getDuration() + " s / " + UidGenerator.getInstance().getProviderName(rec.getProvider()),
                     Tools.printNumber(result.getEstimatedCost(rec), clp.getCountry())));
         }
         registerForContextMenu(getListView());
