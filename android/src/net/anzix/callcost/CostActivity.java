@@ -10,6 +10,8 @@ import android.view.*;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.*;
 import net.anzix.callcost.data.CalculationResult;
 
 import java.util.*;
@@ -20,7 +22,7 @@ import java.util.*;
  *
  * @author elek
  */
-public class CostActivity extends ListActivity {
+public class CostActivity extends SherlockListActivity {
 
     List<CalculationResult> results = new ArrayList<CalculationResult>();
 
@@ -32,6 +34,7 @@ public class CostActivity extends ListActivity {
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.plans);
         new Loader(this, true).execute();
@@ -95,13 +98,13 @@ public class CostActivity extends ListActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.cost, menu);
+    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+        getSherlock().getMenuInflater().inflate(R.menu.cost, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item) {
         Intent intent;
         switch (item.getItemId()) {
             case R.id.menu_preferences:

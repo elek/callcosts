@@ -17,6 +17,7 @@ apply plugin: 'project-report'
 apply plugin: 'android'
 
 
+
 task copyTask(type: Copy) {
     from '../api/src/main/resources/hungary.properties'
     into 'res/raw'
@@ -24,16 +25,17 @@ task copyTask(type: Copy) {
 
 classes.dependsOn copyTask
 
-sourceSets {
-  main {
-    java {
-      srcDir 'src'
-    }
-  }
-}    
+
+
+sourceSets.main.java.srcDirs = ['src','actionbarsherlock/src']
+//workaround for the current version of the gradle-android-plugin
+ant.path(id: 'project.library.res.folder.path', location: 'xxx')
+resDirs = files("res") + files("actionbarsherlock/res")
 
 dependencies {
    compile project(':api')
+   compile 'com.google.android:support-v4:r7'
+//   compile 'com.actionbarsherlock:actionbarsherlock:4.2.0@jar'
 }
    
 

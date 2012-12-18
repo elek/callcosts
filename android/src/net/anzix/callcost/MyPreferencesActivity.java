@@ -9,11 +9,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.preference.*;
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
 
 /**
  * @author elek
  */
-public class MyPreferencesActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener {
+public class MyPreferencesActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener {
     DataCache clp;
 
     @Override

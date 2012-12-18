@@ -4,6 +4,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.AdapterView;
+import com.actionbarsherlock.app.SherlockListActivity;
 import net.anzix.callcost.data.CalculationResult;
 import net.anzix.callcost.data.CallRecord;
 import net.anzix.callcost.ui.ListElement;
@@ -20,7 +21,7 @@ import java.util.List;
  *
  * @author elek
  */
-public class CallLogActivity extends ListActivity {
+public class CallLogActivity extends SherlockListActivity {
 
 
     private DataCache clp;

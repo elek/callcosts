@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import com.actionbarsherlock.app.SherlockListActivity;
 import net.anzix.callcost.option.Option;
 import net.anzix.callcost.data.CalculationResult;
 import net.anzix.callcost.data.CallList;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * @author elek
  */
-public class PlanActivity extends ListActivity {
+public class PlanActivity extends SherlockListActivity {
 
     private Plan p;
 

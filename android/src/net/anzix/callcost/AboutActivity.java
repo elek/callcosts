@@ -10,11 +10,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.actionbarsherlock.app.SherlockActivity;
 
 /**
  * @author elek
  */
-public class AboutActivity extends Activity {
+public class AboutActivity extends SherlockActivity {
 
     DataCache clp;
 
