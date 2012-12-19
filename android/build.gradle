@@ -1,4 +1,6 @@
 apply plugin: 'pmd';
+apply plugin: 'project-report'
+apply plugin: 'android'
 
 buildscript {
   repositories {
@@ -13,11 +15,15 @@ buildscript {
 pmd {
     ruleSets = ["basic", "android"]
 }
-apply plugin: 'project-report'
-apply plugin: 'android'
 
 
-
+sourceSets {
+   main {
+      java {
+         srcDir 'src'
+      }
+   }
+}
 task copyTask(type: Copy) {
     from '../api/src/main/resources/hungary.properties'
     into 'res/raw'
@@ -25,18 +31,12 @@ task copyTask(type: Copy) {
 
 classes.dependsOn copyTask
 
-
-
-sourceSets.main.java.srcDirs = ['src','actionbarsherlock/src']
-//workaround for the current version of the gradle-android-plugin
-ant.path(id: 'project.library.res.folder.path', location: 'xxx')
-resDirs = files("res") + files("actionbarsherlock/res")
-
 dependencies {
    compile project(':api')
    compile 'com.google.android:support-v4:r7'
-//   compile 'com.actionbarsherlock:actionbarsherlock:4.2.0@jar'
-}
+   compile 'com.actionbarsherlock:actionbarsherlock:4.2.0@apklib'
+   compile 'org.slf4j:slf4j-android:1.6.1-RC1'
+	}
    
 
 version = "1.9"
@@ -60,3 +60,4 @@ task configureDebug << {
 task configureRelease << {
     proguard.enabled = true
 }
+
